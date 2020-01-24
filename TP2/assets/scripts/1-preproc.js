@@ -13,7 +13,11 @@
  */
 function domainColor(color, data) {
   // TODO: Define the domain of variable "color" by associating a street name to a specific color
+  var attributes = Object.keys(data[0]).filter(
+    key => (key != "Date" /*&& key != "Moyenne"*/)
+  );
 
+  color.domain(attributes);
 }
 
 /**
@@ -24,6 +28,11 @@ function domainColor(color, data) {
  */
 function parseDate(data) {
   // TODO: Convert the dates from the CSV file to date objects
+  // day - month - year
+  data.forEach(row => {
+    var parseTime = d3.timeParse("%d/%m/%y");
+    row.Date = parseTime(row.Date);
+  });
 }
 
 /**
@@ -49,7 +58,22 @@ function parseDate(data) {
  */
 function createSources(color, data) {
   // TODO: Return the object with the given format
+  var arraySources = [];
 
+  data.columns.forEach(name => {
+    if (name != 'Date') {
+      var elementTemp = {name: name, values: []};
+
+      data.forEach(row => {
+        var valueTemp = {date: row.Date, count: (parseInt(row[name]))};
+        elementTemp.values.push(valueTemp);
+      });
+
+      arraySources.push(elementTemp);
+    }
+  });
+
+  return arraySources;
 }
 
 /**
@@ -61,7 +85,8 @@ function createSources(color, data) {
  */
 function domainX(xFocus, xContext, data) {
   // TODO: specify the domains for the "xFocus" and "xContext" variables for the X axis
-
+  xFocus.domain([data[0].Date, data[data.length - 1].Date]);
+  xContext.domain([data[0].Date, data[data.length - 1].Date]);
 }
 
 /**
@@ -73,5 +98,20 @@ function domainX(xFocus, xContext, data) {
  */
 function domainY(yFocus, yContext, sources) {
   // TODO: specify the domains for the "xFocus" and "xContext" variables for the Y axis
+  var maxValues = [];
+  
+  sources.forEach(streetName => {
+    var values = streetName.values;
+    
+    var max = Math.max.apply(Math, values.map(function(value){
+      return value.count
+    }))
 
+    maxValues.push(max);
+  });
+
+  var max = Math.max.apply(Math, maxValues);
+
+  yFocus.domain([0, max]);
+  yContext.domain([0, max]);
 }

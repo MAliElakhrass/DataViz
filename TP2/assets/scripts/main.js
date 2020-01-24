@@ -6,7 +6,6 @@
  */
 (function(d3, localization) {
   "use strict";
-
   /***** Configuration *****/
 
   // Main graphic (focus)
@@ -79,7 +78,6 @@
     /***** Data preprocessing *****/
     // Scale allowing to map 10 values to 10 different colors
     var color = d3.scaleOrdinal(d3.schemeCategory10);
-
     domainColor(color, data);
     parseDate(data);
 
