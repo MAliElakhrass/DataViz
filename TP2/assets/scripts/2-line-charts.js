@@ -1,48 +1,50 @@
 "use strict";
 
 /**
- * Fichier permettant de dessiner les graphiques "focus" et "contexte".
+ * File to draw the "focus" and "context" line charts.
  */
 
 
 /**
- * Crée une ligne SVG en utilisant les domaines X et Y spécifiés.
- * Cette fonction est utilisée par les graphiques "focus" et "contexte".
+
+ * Creates an SVG line using the specified X and Y domains
+ * This function is used by the "focus" and "context" line charts
  *
- * @param x               Le domaine X.
- * @param y               Le domaine Y.
- * @return d3.svg.line    Une ligne SVG.
+ * @param x               X domain
+ * @param y               Y domain
+ * @return d3.svg.line    SVG line
  *
- * @see https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89      (voir line generator)
+ * @see https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89      (see line generator)
  */
 function createLine(x, y) {
-  // TODO: Retourner une ligne SVG (voir "d3.line"). Pour l'option curve, utiliser un curveBasisOpen.
+  // TODO: Return an SVG line (see "d3.line"). For the curve option, use a curveBasisOpen.
 
 }
 
 /**
- * Crée le graphique focus.
+ * Creates the "focus" line chart
  *
- * @param g         Le groupe SVG dans lequel le graphique doit être dessiné.
- * @param sources   Les données à utiliser.
- * @param line      La fonction permettant de dessiner les lignes du graphique.
- * @param color     L'échelle de couleurs ayant une couleur associée à un nom de rue.
+ * @param g         The SVG group where you draw the graphic. 
+ * @param sources   The data to use. 
+ * @param line      The function to draw the lines of the graphic. 
+ * @param color     Color scale with street names associated to colors
  */
 function createFocusLineChart(g, sources, line, color) {
-  // TODO: Dessiner le graphique focus dans le groupe "g".
-  // Pour chacun des "path" que vous allez dessiner, spécifier l'attribut suivant: .attr("clip-path", "url(#clip)").
+
+  // TODO: Draw the "focus" line chart in the "g" group
+  // For each "path" you draw, specify this attribute : .attr("clip-path", "url(#clip)").
 
 }
 
 /**
- * Crée le graphique contexte.
+ * Creates the "context" line chart
  *
- * @param g         Le groupe SVG dans lequel le graphique doit être dessiné.
- * @param sources   Les données à utiliser.
- * @param line      La fonction permettant de dessiner les lignes du graphique.
- * @param color     L'échelle de couleurs ayant une couleur associée à un nom de rue.
+ * @param g         The SVG group where you draw the graphic. 
+ * @param sources   The data to use. 
+ * @param line      The function to draw the lines of the graphic. 
+ * @param color     Color scale with street names associated to colors
  */
 function createContextLineChart(g, sources, line, color) {
-  // TODO: Dessiner le graphique contexte dans le groupe "g".
+  // TODO: Draw the "context" line chart in the "g" group
 
 }

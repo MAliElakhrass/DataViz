@@ -1,78 +1,77 @@
 "use strict";
 
 /**
- * Fichier permettant de traiter les données provenant du fichier CSV.
+ * File to process CSV data. 
  */
 
 
 /**
- * Précise le domaine en associant un nom de rue à une couleur précise.
+ * Specifies the domain  by associating a street name to a specific color. 
  *
- * @param color   Échelle de 10 couleurs.
- * @param data    Données provenant du fichier CSV.
+ * @param color   10 color scale
+ * @param data    CSV data
  */
 function domainColor(color, data) {
-  // TODO: Définir le domaine de la variable "color" en associant un nom de rue à une couleur.
+  // TODO: Define the domain of variable "color" by associating a street name to a specific color
 
 }
 
 /**
- * Convertit les dates se trouvant dans le fichier CSV en objet de type Date.
+ * Converts dates in the CSV file to Date objects. 
  *
- * @param data    Données provenant du fichier CSV.
+ * @param data    CSV data
  * @see https://www.w3schools.com/jsref/jsref_obj_date.asp
  */
 function parseDate(data) {
-  // TODO: Convertir les dates du fichier CSV en objet de type Date.
-
+  // TODO: Convert the dates from the CSV file to date objects
 }
 
 /**
- * Trie les données par nom de rue puis par date.
+ * Sorts data by street name and then by date
+ * 
+ * @param color     10 color scale (its domain contains the street names)
+ * @param data      Data from CSV file
  *
- * @param color     Échelle de 10 couleurs (son domaine contient les noms de rues).
- * @param data      Données provenant du fichier CSV.
- *
- * @return Array    Les données triées qui seront utilisées pour générer les graphiques.
- *                  L'élément retourné doit être un tableau d'objets comptant 10 entrées, une pour chaque rue
- *                  et une pour la moyenne. L'objet retourné doit être de la forme suivante:
+ * @return Array    The sorted data which will be used to generate the graphic. 
+ *                  The returned element should be a table with 10 entries, one of each street and one for the average. 
+  *                 It should be of the following form: 
  *
  *                  [
  *                    {
- *                      name: string      // Le nom de la rue,
- *                      values: [         // Le tableau compte 365 entrées, pour les 365 jours de l'année.
- *                        date: Date,     // La date du jour.
- *                        count: number   // Le nombre de vélos compté ce jour là (effectuer une conversion avec parseInt)
+ *                      name: string      // Street name
+ *                      values: [         // A table with 365 entries, one for each day
+ *                        date: Date,     // The date
+ *                        count: number   // The quantity of bikes on that day (convert it with parseInt)
  *                      ]
  *                    },
  *                     ...
  *                  ]
  */
 function createSources(color, data) {
-  // TODO: Retourner l'objet ayant le format demandé.
+  // TODO: Return the object with the given format
 
 }
 
 /**
- * Précise le domaine des échelles utilisées par les graphiques "focus" et "contexte" pour l'axe X.
+ * Specifies the domain of the scales used for the "focus" and "context" line charts for the X axis
  *
- * @param xFocus      Échelle en X utilisée avec le graphique "focus".
- * @param xContext    Échelle en X utilisée avec le graphique "contexte".
- * @param data        Données provenant du fichier CSV.
+ * @param xFocus      X scale used for the "focus" line chart
+ * @param xContext    X scale used for the "context" line chart
+ * @param data        Data from the CSV file
  */
 function domainX(xFocus, xContext, data) {
-  // TODO: Préciser les domaines pour les variables "xFocus" et "xContext" pour l'axe X.
+  // TODO: specify the domains for the "xFocus" and "xContext" variables for the X axis
 
 }
 
 /**
- * Précise le domaine des échelles utilisées par les graphiques "focus" et "contexte" pour l'axe Y.
+ * Specifies the domain of the scales used for the "focus" and "context" line charts for the X axis
  *
- * @param yFocus      Échelle en Y utilisée avec le graphique "focus".
- * @param yContext    Échelle en Y utilisée avec le graphique "contexte".
- * @param sources     Données triées par nom de rue et par date (voir fonction "createSources").
+ * @param yFocus      Y scale used for the "focus" line chart
+ * @param yContext    Y scale used for the "context" line chart
+ * @param sources     Data sorted by street and date (see function "createSources").
  */
 function domainY(yFocus, yContext, sources) {
-  // TODO: Préciser les domaines pour les variables "yFocus" et "yContext" pour l'axe Y.
+  // TODO: specify the domains for the "xFocus" and "xContext" variables for the Y axis
 
 }

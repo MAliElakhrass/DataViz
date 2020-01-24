@@ -1,15 +1,15 @@
 /**
- * Fichier principal permettant de dessiner les deux graphiques demandés. Ce fichier utilise les autres fichiers
- * que vous devez compléter.
+ * Main file allowing to draw both graphs. This file uses the other files that you have to fill.
  *
- * /!\ Aucune modification n'est nécessaire dans ce fichier!
+ * /!\ No modification is needed in this file!
+ * /!\ IMPORTANT : DO NOT MODIFY THIS FILE
  */
 (function(d3, localization) {
   "use strict";
 
   /***** Configuration *****/
 
-  // Graphique principal (focus)
+  // Main graphic (focus)
   var marginFocus = {
     top: 10,
     right: 10,
@@ -19,7 +19,7 @@
   var widthFocus = 1200 - marginFocus.left - marginFocus.right;
   var heightFocus = 500 - marginFocus.top - marginFocus.bottom;
 
-  // Graphique secondaire qui permet de choisir l'échelle de la visualisation (contexte)
+  // Secondary graphic allowing the choose the vizualisation scale (context)
   var marginContext = {
     top: 430,
     right: 10,
@@ -29,7 +29,7 @@
   var widthContext = widthFocus;
   var heightContext = 500 - marginContext.top - marginContext.bottom;
 
-  /***** Échelles *****/
+  /***** Scales *****/
   var xFocus = d3.scaleTime().range([0, widthFocus]);
   var yFocus = d3.scaleLinear().range([heightFocus, 0]);
 
@@ -41,21 +41,21 @@
 
   var xAxisContext = d3.axisBottom(xContext).tickFormat(localization.getFormattedDate);
 
-  /***** Création des éléments *****/
+  /***** Creation of SVG elements *****/
   var svg = d3.select("body")
     .append("svg")
     .attr("width", widthFocus + marginFocus.left + marginFocus.right)
     .attr("height", heightFocus + marginFocus.top + marginFocus.bottom);
 
-  // Groupe affichant le graphique principal (focus).
+  // Group showing the main graphic (focus)
   var focus = svg.append("g")
     .attr("transform", "translate(" + marginFocus.left + "," + marginFocus.top + ")");
 
-  // Groupe affichant le graphique secondaire (contexte).
+  // Group showing the secondaray graphic (context)
   var context = svg.append("g")
     .attr("transform", "translate(" + marginContext.left + "," + marginContext.top + ")");
 
-  // Ajout d'un plan de découpage.
+  // Add a clip path
   svg.append("defs")
     .append("clipPath")
     .attr("id", "clip")
@@ -63,21 +63,21 @@
     .attr("width", widthFocus)
     .attr("height", heightFocus);
 
-  // Fonctions pour dessiner les lignes
+  // Create the focus and context lines
   var lineFocus = createLine(xFocus, yFocus);
   var lineContext = createLine(xContext, yContext);
 
-  // Permet de redessiner le graphique principal lorsque le zoom/brush est modifié.
+  // Allows to redraw the main graphic when the zoom/brush is modified
   var brush = d3.brushX()
     .extent([[0, 0], [widthContext, heightContext]])
     .on("brush", function () {
       brushUpdate(brush, focus, lineFocus, xFocus, xContext, xAxisFocus, yAxisFocus);
     });
 
-  /***** Chargement des données *****/
+  /***** Data loading *****/
   d3.csv("./data/2016.csv").then(function(data) {
-    /***** Prétraitement des données *****/
-    // Échelle permettant d'associer 10 valeurs à 10 couleurs différentes
+    /***** Data preprocessing *****/
+    // Scale allowing to map 10 values to 10 different colors
     var color = d3.scaleOrdinal(d3.schemeCategory10);
 
     domainColor(color, data);
@@ -87,7 +87,7 @@
     domainX(xFocus, xContext, data);
     domainY(yFocus, yContext, sources);
 
-    /***** Création du graphique focus *****/
+    /***** Creation of the focus graphic *****/
     createFocusLineChart(focus, sources, lineFocus, color);
 
     // Axes focus
@@ -100,10 +100,10 @@
       .attr("class", "y axis")
       .call(yAxisFocus);
 
-    /***** Création du graphique contexte *****/
+    /***** Creation of the context graphic *****/
     createContextLineChart(context, sources, lineContext, color);
 
-    // Axes contexte
+    // Context's axes
     context.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + heightContext + ")")
@@ -116,7 +116,7 @@
       .attr("y", -6)
       .attr("height", heightContext + 7);
 
-    /***** Création de la légende *****/
+    /***** Creation of the legend *****/
     legend(svg, sources, color);
   });
 })(d3, localization);

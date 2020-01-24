@@ -1,33 +1,32 @@
 "use strict";
 
 /**
- * Fichier permettant de générer la légende et de gérer les interactions de celle-ci.
+ * File used for generating the legend and controlling the interactions with it.
  */
 
 
 /**
- * Crée une légende à partir de la source.
+ * Create a legend from the given source.
  *
- * @param svg       L'élément SVG à utiliser pour créer la légende.
- * @param sources   Données triées par nom de rue et par date.
- * @param color     Échelle de 10 couleurs.
+ * @param svg       SVG element to use in order to create the legend.
+ * @param sources   Data sorted by street name and by date.
+ * @param color     The 10-color scale to use.
  */
 function legend(svg, sources, color) {
-  // TODO: Créer la légende accompagnant le graphique.
+  // TODO: Create the legend that supplements the graphic.
 
 
 }
 
 /**
- * Permet d'afficher ou non la ligne correspondant au carré qui a été cliqué.
+ * Allows for show/hide whether the line that corresponding to the clicked square.
  *
- * En cliquant sur un carré, on fait disparaitre/réapparaitre la ligne correspondant et l'intérieur du carré
- * devient blanc/redevient de la couleur d'origine.
+ * By clicking on a square, we display/hide the corresponding line and the square's interior becomes white/goes back to its original color.
  *
- * @param element   Le carré qui a été cliqué.
- * @param color     Échelle de 10 couleurs.
+ * @param element   The square that was clicked
+ * @param color     The 10-color scale
  */
 function displayLine(element, color) {
-  // TODO: Compléter le code pour faire afficher ou disparaître une ligne en fonction de l'élément cliqué.
+  // TODO: Complete the code to show or hide a line depending on the selected item
 
 }
