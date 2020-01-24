@@ -19,6 +19,24 @@
 function createLine(x, y) {
   // TODO: Return an SVG line (see "d3.line"). For the curve option, use a curveBasisOpen.
 
+  return d3.line()
+    .x(function(d) { return x(d.date); }) // set the x values for the line generator
+    .y(function(d) { return y(d.count); }) // set the y values for the line generator 
+    .curve(d3.curveBasisOpen) // apply smoothing to the line
+
+  // console.log(line)
+}
+
+function setStrokeColor(name, color){
+  if (name == "Moyenne"){
+    return 'black';
+  }
+
+  return color(name)
+}
+
+function setStrokeWidth(name) {
+
 }
 
 /**
@@ -34,6 +52,21 @@ function createFocusLineChart(g, sources, line, color) {
   // TODO: Draw the "focus" line chart in the "g" group
   // For each "path" you draw, specify this attribute : .attr("clip-path", "url(#clip)").
 
+  sources.forEach(element => {
+    var width = 1;
+    if (element.name == "Moyenne") {
+      width = 2;
+    }
+
+    g.append("path")
+    .datum(element.values)
+    .attr("class", "line") // Assign a class for styling 
+    .attr("d", line) // 11. Calls the line generator
+    .attr("clip-path", "url(#clip)")
+    .style('stroke', setStrokeColor(element.name, color))
+    .style('stroke-width', width)
+  });
+
 }
 
 /**
@@ -46,5 +79,17 @@ function createFocusLineChart(g, sources, line, color) {
  */
 function createContextLineChart(g, sources, line, color) {
   // TODO: Draw the "context" line chart in the "g" group
-
+  sources.forEach(element => {
+    var width = 1;
+    if (element.name == "Moyenne") {
+      width = 2;
+    }
+    
+    g.append("path")
+    .datum(element.values)
+    .attr("class", "line") // Assign a class for styling 
+    .attr("d", line) // 11. Calls the line generator
+    .style('stroke', setStrokeColor(element.name, color))
+    .style('stroke-width', width)
+  });
 }
