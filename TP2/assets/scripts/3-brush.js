@@ -22,6 +22,9 @@
  */
 function brushUpdate(brush, g, line, xFocus, xContext, xAxis, yAxis) {
   // TODO: Redraw the focus line chart as a function of the selected zone in the context line chart
-
-
+  // if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
+  var s = d3.event.selection || xContext.range();
+  xFocus.domain(s.map(xContext.invert, xContext));
+  g.selectAll(".line").attr("d", line);
+  g.select(".x.axis").call(xAxis);
 }

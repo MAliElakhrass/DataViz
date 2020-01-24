@@ -35,10 +35,6 @@ function setStrokeColor(name, color){
   return color(name)
 }
 
-function setStrokeWidth(name) {
-
-}
-
 /**
  * Creates the "focus" line chart
  *
