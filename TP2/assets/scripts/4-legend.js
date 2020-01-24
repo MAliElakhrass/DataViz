@@ -14,7 +14,29 @@
  */
 function legend(svg, sources, color) {
   // TODO: Create the legend that supplements the graphic.
+  var size = 15
+  
+  svg.selectAll("mydots")
+      .data(color.domain())
+      .enter()
+      .append("rect")
+      .attr("x", 75)
+      .attr("y", function(d,i){ return i*(size+5)})
+      .attr("width", size)
+      .attr("height", size)
+      .style("fill", function(d){ if (d == "Moyenne") {return 'black'} return color(d)});
 
+  // Add one dot in the legend for each name.
+  svg.selectAll("mylabels")
+      .data(color.domain())
+      .enter()
+      .append("text")
+      .attr("x", 75 + size*1.2)
+      .attr("y", function(d,i){ return 5 + i*(size+5) + (size/2)})
+      .style("fill", function(d){ if (d == "Moyenne") {return 'black'} return color(d)})
+      .text(function(d){ return d})
+      .attr("text-anchor", "left")
+      .style("alignment-baseline", "middle")
 
 }
 
