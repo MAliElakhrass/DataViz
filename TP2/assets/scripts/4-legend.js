@@ -25,7 +25,16 @@ function legend(svg, sources, color) {
       .attr("width", size)
       .attr("height", size)
       .style("font-size", "8px")
-      .style("fill", function(d){ if (d == "Moyenne") {return 'black'} return color(d)});
+      .style('stroke', 'black')
+      .style("fill", function(d){ if (d == "Moyenne") {return 'black'} return color(d)})
+      .on('click', function() {
+        if (d3.select(this).style('fill') == 'white'){
+          d3.select(this).style("fill", function(d){ if (d == "Moyenne") {return 'black'} return color(d)})
+        } else {
+          d3.select(this).style("fill", 'white')
+          displayLine(d3.select(this), color)
+        }
+      });
 
   // Add one dot in the legend for each name.
   svg.selectAll("mylabels")
@@ -34,9 +43,9 @@ function legend(svg, sources, color) {
       .append("text")
       .attr("x", 75 + size*1.2)
       .attr("y", function(d,i){ return 3+i*(size+5) + (size/2)})
-      .style("fill", function(d){ if (d == "Moyenne") {return 'black'} return color(d)})
+      .style("fill", 'black')
       .text(function(d){ return d})
-      .style("font-size", "8px")
+      .style("font-size", "9px")
       .attr("text-anchor", "left")
       .style("alignment-baseline", "middle")
 
