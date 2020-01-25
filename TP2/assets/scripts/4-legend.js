@@ -14,7 +14,7 @@
  */
 function legend(svg, sources, color) {
   // TODO: Create the legend that supplements the graphic.
-  var size = 15
+  var size = 10
   
   svg.selectAll("mydots")
       .data(color.domain())
@@ -24,6 +24,7 @@ function legend(svg, sources, color) {
       .attr("y", function(d,i){ return i*(size+5)})
       .attr("width", size)
       .attr("height", size)
+      .style("font-size", "8px")
       .style("fill", function(d){ if (d == "Moyenne") {return 'black'} return color(d)});
 
   // Add one dot in the legend for each name.
@@ -32,9 +33,10 @@ function legend(svg, sources, color) {
       .enter()
       .append("text")
       .attr("x", 75 + size*1.2)
-      .attr("y", function(d,i){ return 5 + i*(size+5) + (size/2)})
+      .attr("y", function(d,i){ return 3+i*(size+5) + (size/2)})
       .style("fill", function(d){ if (d == "Moyenne") {return 'black'} return color(d)})
       .text(function(d){ return d})
+      .style("font-size", "8px")
       .attr("text-anchor", "left")
       .style("alignment-baseline", "middle")
 
