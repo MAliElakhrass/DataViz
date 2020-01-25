@@ -32,8 +32,8 @@ function legend(svg, sources, color) {
           d3.select(this).style("fill", function(d){ if (d == "Moyenne") {return 'black'} return color(d)})
         } else {
           d3.select(this).style("fill", 'white')
-          displayLine(d3.select(this), color)
         }
+        displayLine(d3.select(this), color)
       });
 
   // Add one dot in the legend for each name.
@@ -51,6 +51,14 @@ function legend(svg, sources, color) {
 
 }
 
+function setOpacity(street, element){
+  if (street == element){
+    return 0
+  }
+
+  return 1
+}
+
 /**
  * Allows for show/hide whether the line that corresponding to the clicked square.
  *
@@ -61,5 +69,26 @@ function legend(svg, sources, color) {
  */
 function displayLine(element, color) {
   // TODO: Complete the code to show or hide a line depending on the selected item
+  // console.log(element.data())
+  var colors = color.range()
+  var moyenneIndex = color.domain().indexOf("Moyenne")
+  colors[moyenneIndex] = "black"
+  color.range(colors)
 
+  var street = element.data()[0];
+  var indexColor = color(street);
+
+  d3.select('svg')
+    .selectAll('.line')
+    .style('opacity', function(){
+      if (d3.select(this).style('stroke') == indexColor && d3.select(this).style('opacity') == 0 ){
+        return 1
+      }
+
+      if (d3.select(this).style('stroke') == indexColor || d3.select(this).style('opacity') == 0 ){
+        return 0
+      }
+
+      return 1
+    });  
 }
