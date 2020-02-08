@@ -16,7 +16,29 @@
  */
 function createAxes(g, xAxis, yAxis, height, width) {
   // TODO: Draw the X and Y axes.
+  
+  g.append("g")
+    .attr("class", "axis x")
+    .attr("transform", "translate(" + 0 + "," + height + ")")
+    .call(xAxis);
 
+  g.append("g")
+    .attr("class", "axis y")
+    .call(yAxis);
+
+  g.append("text")
+    .attr("class", "axis x legend")
+    .attr("text-anchor", "middle")
+    .text('Espérance de vie (annees)')
+    .attr("font-family",  "Gill Sans", "Gill Sans MT")
+    .attr("transform", "translate(" + (width - 80) + "," + (height - 10) + ")");
+
+  g.append("text")
+    .attr("class", "axis y legend")
+    .attr("text-anchor", "middle")
+    .text('Revenu (USD)')
+    .attr("font-family",  "Gill Sans", "Gill Sans MT")
+    .attr("transform", "rotate(" + 270 + ") translate(" + -50 + ", " + 20 + ")");
 }
 
 /**
@@ -34,4 +56,14 @@ function createBubbleChart(g, data, x, y, r, color, tip) {
   // TODO: Draw the graph's circles by using the specified scales.
   //       Make sure you add the tooltip when a circle is hovered.
 
+  g.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("cx", d => x(d.lifeExpectancy))
+    .attr("cy", d => y(d.income))
+    .attr("r", d => r(d.population))
+    .attr("fill", d => color(d.zone))
+    .on('mouseover', tip.show)
+    .on('mouseout', tip.hide);
 }
