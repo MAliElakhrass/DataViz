@@ -16,7 +16,9 @@ function search(countrySelected, g) {
   /* TODO:
        - Highlight the selected country by coloring its circle in black and by setting its opacity to 100%.
        - Set the opacity to 15% for the circles associated to the other countries (different than "countrySelected").
-   */
+  */
+
+  g.selectAll("circle").attr("class", d => d.name == countrySelected ? 'selected' : 'hide');
 
 }
 
@@ -27,5 +29,7 @@ function search(countrySelected, g) {
  */
 function reset(g) {
   // TODO: Reset the bubble chart display to its default state.
+  
+  g.selectAll("circle").attr("class", '');
 
 }

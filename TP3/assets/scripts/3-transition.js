@@ -21,5 +21,10 @@ function transition(g, data, x, y, r) {
        - Transition has to complete in 1 second.
    */
 
-
+  g.selectAll("circle")
+		.data(data)
+		.transition().duration(1000)
+		.attr("cx", d => x(d.lifeExpectancy))
+    .attr("cy", d => y(d.income))
+    .attr("r", d => r(d.population));
 }

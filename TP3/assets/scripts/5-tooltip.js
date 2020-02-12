@@ -16,4 +16,10 @@ function getToolTipText(d, formatNumber) {
   // TODO: Return the text to show in the tooltip, in the required format.
   //       Make sure you use the function "formatNumber" to correctly format the numbers.
 
+  return "Pays: <b>" + d.name + "</b>"
+          + "<br /> Esperance de vie : <b>" + formatNumber(d.lifeExpectancy) + "</b> ans"
+          + "<br />Revenu : <b>" + formatNumber(d.income) + "</b> USD"
+          + "<br />Population : <b>" + formatNumber(d.population) + "</b> </b> habitants"
+          + "<br />Zone du monde : <b>" + d.zone + "</b>";
+
 }
