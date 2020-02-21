@@ -14,7 +14,9 @@
  */
 function domainColor(color, data) {
   // TODO: Specify the color scale for each BIXI station by assigning each station a distinct color.
+  var stations = data.map(row => row.name);
 
+  color.domain(stations);
 }
 
 /**
@@ -25,7 +27,9 @@ function domainColor(color, data) {
  */
 function domainX(x, data) {
   // TODO: Specify the domain for variable "x" by associating only the used BIXI stations.
+  var stations = data.map(row => row.name);
 
+  x.domain(stations)
 }
 
 /**
@@ -36,7 +40,13 @@ function domainX(x, data) {
  */
 function domainY(y, currentData) {
   // TODO: Specifies the domain for the "y" axis by taking the minimum and maximum values as the number of trips to a BIXI station.
+  var valueArray = [];
+  
+  currentData.destinations.forEach(station => {
+    valueArray.push(station.count);
+  });
 
+  y.domain([d3.min(valueArray), d3.max(valueArray)]);
 }
 
 /**
@@ -47,7 +57,18 @@ function domainY(y, currentData) {
  */
 function getMatrix(data) {
   // TODO: Calculate the adjacency matrix to create the chord diagram.
-  return [];
+  var adjacencyMatrix = []; 
+
+  data.forEach(row => {
+    var dest = [];
+    row.destinations.forEach(station => {
+      dest.push(station.count);
+    });
+
+    adjacencyMatrix.push(dest);
+  });
+
+  return adjacencyMatrix;
 }
 
 /**
@@ -57,5 +78,16 @@ function getMatrix(data) {
  */
 function getTotal(data) {
   // TODO: Calculate the total number of trips done on August 2015.
-  return 0;
+  var total = 0;
+
+  data.forEach(row => {
+    var valueArray = [];
+    row.destinations.forEach(station => {
+      valueArray.push(station.count);
+    });
+
+    total += d3.sum(valueArray)
+  });
+
+  return total;
 }
