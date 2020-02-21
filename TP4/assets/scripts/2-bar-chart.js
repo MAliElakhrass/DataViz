@@ -14,7 +14,22 @@
  */
 function createAxes(g, xAxis, yAxis, height) {
   // TODO: Draw the X and Y axis of the graphic. Make sure you put a title for the Y axis.
+  g.append("g")
+    .attr("class", "axis x")
+    .attr("transform", "translate(" + 0 + "," + height + ")")
+    .call(xAxis)
+    .selectAll("text")
+    .attr("transform", "rotate(30) ")
+    .style("text-anchor", "start");
 
+  g.append("g")
+    .attr("class", "axis y")
+    .call(yAxis)
+    .append("text")
+    .text('Nombre de trajets')
+    .attr("fill", "#000")
+    .style("text-anchor", "middle")
+    .attr("transform", "translate(0,-10)");
 }
 
 /**
@@ -32,6 +47,26 @@ function createBarChart(g, currentData, x, y, color, tip, height) {
   // TODO: Draw the bars for the bar charts using the specified scales.
   //       Make sure you show a tooltip when a bar in the bar chart is hovered.
 
+  var width = x.range()[1];
+
+
+  var xx = d3.scaleBand()
+	.rangeRound([0, width])
+	.padding(0.91);
+
+  g.selectAll("rect")
+    .data(currentData.destinations)
+    .enter()
+    .append("rect")
+    .attr("x", d => x(d.name))
+    .attr("y", d => y(d.count))
+    .attr("fill", d => color(d.name))
+    .attr("height",  d => height - y(d.count))
+    .attr("width", xx.bandwidth())
+    .attr("transform", "translate(5, 0) ")
+    .on('mouseover', tip.show)
+    .on('mouseout', tip.hide);
+
 }
 
 /**
@@ -48,6 +83,18 @@ function transition(g, newData, y, yAxis, height) {
    - Complete a transition to update the Y axis and the height of the bar chart, taking into account the new data.
    - The transition has to complete in 1 second.
    */
+
+  g.selectAll("rect")
+    .data(newData.destinations)
+    .transition()
+    .duration(1000)
+    .attr("y", d => y(d.count))
+    .attr("height",  d => height - y(d.count));
+    
+  g.select('.y.axis')
+    .transition()
+    .duration(1000)
+    .call(yAxis);
 
 }
 
