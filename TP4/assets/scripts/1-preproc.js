@@ -81,12 +81,7 @@ function getTotal(data) {
   var total = 0;
 
   data.forEach(row => {
-    var valueArray = [];
-    row.destinations.forEach(station => {
-      valueArray.push(station.count);
-    });
-
-    total += d3.sum(valueArray)
+    total += d3.sum(row.destinations, d => d.count);
   });
 
   return total;

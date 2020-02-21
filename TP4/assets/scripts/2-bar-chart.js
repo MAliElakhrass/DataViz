@@ -95,7 +95,6 @@ function transition(g, newData, y, yAxis, height) {
     .transition()
     .duration(1000)
     .call(yAxis);
-
 }
 
 /**
@@ -110,5 +109,7 @@ function getToolTipText(d, currentData, formatPercent) {
   // TODO: Return the text in the tooltip, correctly formatted as specified.
   //       Make sure you use the function "formatPercent" to correctly format the percentage.
 
-  return "";
+  var total = d3.sum(currentData.destinations, d => d.count);
+
+  return d.count + " (" + formatPercent(d.count/total) + ")";
 }
