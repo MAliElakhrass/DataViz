@@ -15,12 +15,6 @@
  * @param r       Scale to use for the circles' radiuses.
  */
 function transition(g, data, x, y, r) {
-  /* TODO:
-       - Complete a transition from the previous circles positions and the new circles positions.
-       - Update the circles radiuses.
-       - Transition has to complete in 1 second.
-   */
-
   g.selectAll("circle")
 		.data(data)
 		.transition().duration(1000)

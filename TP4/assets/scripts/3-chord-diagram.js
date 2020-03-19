@@ -19,13 +19,40 @@
  * @see https://bl.ocks.org/mbostock/4062006
  */
 function createGroups(g, data, layout, arc, color, total, formatPercent) {
-  /* TODO:
-     - Créer les groupes du diagramme qui sont associés aux stations de BIXI fournies.
-     - Utiliser un "textPath" pour que les nom de stations suivent la forme des groupes.
-     - Tronquer les noms des stations de BIXI qui sont trop longs (Pontiac et Métro Mont-Royal).
-     - Afficher un élément "title" lorsqu'un groupe est survolé par la souris.
-  */
+  var group = g.selectAll("g")
+              .data(layout.groups)
+              .enter();
 
+  group.append("path")
+      .attr("class", "group")
+      .attr("fill", d => color(d.index))
+      .attr("id", d => "arc" + d.index)
+      .attr("d", arc);
+
+  group.append("text")
+       .attr("x", 6)
+       .attr("dy", 15)
+       .append("textPath")
+       .attr("href",d => "#arc" + d.index)
+       .style("fill", "white")
+       .text(d => {
+         var name = data[d.index].name
+         if (name === "Métro Mont-Royal (Rivard/Mont-Royal)"){
+            return "Métro Mont-Royal"
+         }
+         else if (name === "Pontiac / Gilford") {
+           return "Pontiac"
+         }
+        return name
+       })
+       .style("text-anchor","start") 
+       .style("font-size","12px")
+
+       .append("title")
+       .text(d => {
+
+         return d.value + ": " + formatPercent(d.value/total) + " des départs";
+       });
 }
 
 /**
@@ -42,13 +69,32 @@ function createGroups(g, data, layout, arc, color, total, formatPercent) {
  * @see https://beta.observablehq.com/@mbostock/d3-chord-dependency-diagram
  */
 function createChords(g, data, layout, path, color, total, formatPercent) {
-  /* TODO:
-     - Créer les cordes du diagramme avec une opacité de 80%.
-     - Create the diagram's chords with an 80% opacity.
-     - Create the diagram's chords with an 80% opacity.
-     - Show a "title" element when a chord is hovered by the user's mouse.
-  */
+  var chords = g.selectAll("chord")
+                .data(layout)
+                .enter();
 
+  chords.append("path")
+        .attr("class", "chord")
+        .attr("fill", d => color(d.source.index))
+        .attr("id", d => "chord" + d.source.index + d.target.index)
+        .attr("d", path)
+        .append("title")
+        .text(d => {
+          return data[d.source.index].name + " -> " + data[d.target.index].name + ": " 
+                  + formatPercent(d.source.value/total) + "\n" 
+                  + data[d.target.index].name + " -> " + data[d.source.index].name + ": " 
+                  + formatPercent(d.target.value/total);
+        });
+}
+
+function fade(opacity) {
+  return function(g, i) {
+      svg.selectAll("path")
+          .attr("class", "chord")
+          .filter(function(d) { return d.source.index != i && d.target.index != i; })
+          .transition()
+          .style("opacity", opacity);
+  };
 }
 
 /**
@@ -57,10 +103,17 @@ function createChords(g, data, layout, path, color, total, formatPercent) {
  * @param g     The SVG group in which the bar chart is drawn.
  */
 function initializeGroupsHovered(g) {
-  /* TODO:
-     - When a group is hovered, show the incoming and outgoing chords for this groups with an 80% opacity. 
-       The other chords have to drawn with an 10% opacity.
-     - Reset the default style for the diagram when the user mouse's leaves the diagram's group.
-  */
+
+  g.selectAll(".group")
+    .on("mouseover", d => {
+      d3.selectAll(".chord")
+        .attr("class", dChord => {
+          if(!(dChord.source.index === d.index || dChord.target.index === d.index)){
+            return "chord fade";
+          } else{
+            return "chord";
+          }
+        });
+    })
 
 }

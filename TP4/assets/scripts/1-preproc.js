@@ -13,7 +13,6 @@
  * @param data    Data from JSON file.
  */
 function domainColor(color, data) {
-  // TODO: Specify the color scale for each BIXI station by assigning each station a distinct color.
   var stations = data.map(row => row.name);
 
   color.domain(stations);
@@ -26,7 +25,6 @@ function domainColor(color, data) {
  * @param data    Data from JSON file.
  */
 function domainX(x, data) {
-  // TODO: Specify the domain for variable "x" by associating only the used BIXI stations.
   var stations = data.map(row => row.name);
 
   x.domain(stations)
@@ -39,12 +37,7 @@ function domainX(x, data) {
  * @param currentData   Data currently used by the bar chart.
  */
 function domainY(y, currentData) {
-  // TODO: Specifies the domain for the "y" axis by taking the minimum and maximum values as the number of trips to a BIXI station.
-  var valueArray = [];
-  
-  currentData.destinations.forEach(station => {
-    valueArray.push(station.count);
-  });
+  var valueArray = currentData.destinations.map(d => d.count);
 
   y.domain([d3.min(valueArray), d3.max(valueArray)]);
 }
@@ -56,7 +49,6 @@ function domainY(y, currentData) {
  * @return {Array}    A 10x10 matrix indicating the number of trips from a station to another.
  */
 function getMatrix(data) {
-  // TODO: Calculate the adjacency matrix to create the chord diagram.
   var adjacencyMatrix = []; 
 
   data.forEach(row => {
@@ -77,7 +69,6 @@ function getMatrix(data) {
  * @param data    Data from JSON file.
  */
 function getTotal(data) {
-  // TODO: Calculate the total number of trips done on August 2015.
   var total = 0;
 
   data.forEach(row => {

@@ -13,7 +13,6 @@
  * @param height  Height of the graphic.
  */
 function createAxes(g, xAxis, yAxis, height) {
-  // TODO: Draw the X and Y axis of the graphic. Make sure you put a title for the Y axis.
   g.append("g")
     .attr("class", "axis x")
     .attr("transform", "translate(" + 0 + "," + height + ")")
@@ -44,9 +43,6 @@ function createAxes(g, xAxis, yAxis, height) {
  * @param height        Height of the graphic.
  */
 function createBarChart(g, currentData, x, y, color, tip, height) {
-  // TODO: Draw the bars for the bar charts using the specified scales.
-  //       Make sure you show a tooltip when a bar in the bar chart is hovered.
-
   var width = x.range()[1];
 
 
@@ -79,11 +75,6 @@ function createBarChart(g, currentData, x, y, color, tip, height) {
  * @param height    Height of the graphic.
  */
 function transition(g, newData, y, yAxis, height) {
-  /* TODO:
-   - Complete a transition to update the Y axis and the height of the bar chart, taking into account the new data.
-   - The transition has to complete in 1 second.
-   */
-
   g.selectAll("rect")
     .data(newData.destinations)
     .transition()
@@ -106,9 +97,6 @@ function transition(g, newData, y, yAxis, height) {
  * @return {string}       Tooltip's text to be shown.
  */
 function getToolTipText(d, currentData, formatPercent) {
-  // TODO: Return the text in the tooltip, correctly formatted as specified.
-  //       Make sure you use the function "formatPercent" to correctly format the percentage.
-
   var total = d3.sum(currentData.destinations, d => d.count);
 
   return d.count + " (" + formatPercent(d.count/total) + ")";

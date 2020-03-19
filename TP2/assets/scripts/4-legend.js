@@ -13,7 +13,6 @@
  * @param color     The 10-color scale to use.
  */
 function legend(svg, sources, color) {
-  // TODO: Create the legend that supplements the graphic.
   var size = 10
   
   svg.selectAll("mydots")
@@ -36,7 +35,6 @@ function legend(svg, sources, color) {
         displayLine(d3.select(this), color)
       });
 
-  // Add one dot in the legend for each name.
   svg.selectAll("mylabels")
       .data(color.domain())
       .enter()
@@ -68,8 +66,6 @@ function setOpacity(street, element){
  * @param color     The 10-color scale
  */
 function displayLine(element, color) {
-  // TODO: Complete the code to show or hide a line depending on the selected item
-  // console.log(element.data())
   var colors = color.range()
   var moyenneIndex = color.domain().indexOf("Moyenne")
   colors[moyenneIndex] = "black"

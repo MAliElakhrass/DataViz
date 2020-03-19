@@ -15,8 +15,6 @@
  * @param width   The graphic's width.
  */
 function createAxes(g, xAxis, yAxis, height, width) {
-  // TODO: Draw the X and Y axes.
-  
   g.append("g")
     .attr("class", "axis x")
     .attr("transform", "translate(" + 0 + "," + height + ")")
@@ -34,8 +32,8 @@ function createAxes(g, xAxis, yAxis, height, width) {
     .attr("transform", "translate(" + (width - 80) + "," + (height - 10) + ")");
 
   g.append("text")
-    .attr("class", "axis y legend")
-    .attr("text-anchor", "middle")
+    .attr("class", "axis y name")
+    .attr("text-anchor", "start")
     .text('Revenu (USD)')
     .attr("font-family",  "Gill Sans", "Gill Sans MT")
     .attr("transform", "rotate(" + 270 + ") translate(" + -50 + ", " + 20 + ")");
@@ -53,8 +51,6 @@ function createAxes(g, xAxis, yAxis, height, width) {
  * @param tip     Tooltip to show when a circle is hovered.
  */
 function createBubbleChart(g, data, x, y, r, color, tip) {
-  // TODO: Draw the graph's circles by using the specified scales.
-  //       Make sure you add the tooltip when a circle is hovered.
 
   g.selectAll("circle")
     .data(data)
