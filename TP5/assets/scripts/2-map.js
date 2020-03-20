@@ -14,17 +14,16 @@
  * @see https://gist.github.com/d3noob/9211665
  */
 function initTileLayer(L, map) {
+  URL = 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
+  map.setView([57.3, -94.7], 4);
 
-    /* TODO: Initialize the "tileLayer" with the following properties:
-       - URL du fond de carte: https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png;
-       - Zoom maximum: 10;
-       - Zoom minimum: 1.
-
-     Set the initial view of the map with the following values:
-       - Coordonnées: [57.3, -94.7];
-       - Niveau de zoom: 4.
-   */
-
+  L.tileLayer(
+    URL,
+    {
+      maxZoom: 10,
+      minZoom: 1
+    }
+  ).addTo(map);
 }
 
 /**
@@ -36,8 +35,10 @@ function initTileLayer(L, map) {
  * @see https://gist.github.com/d3noob/9211665
  */
 function initSvgLayer(map) {
-  // TODO: Create the SVG element basing yourself on the above example. Make sure to create a "g" element in the SVG element. 
-
+  var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+        g = svg.append("g").attr("class", "leaflet-zoom-hide");
+      
+  return svg
 }
 
 /**
