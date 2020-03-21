@@ -56,21 +56,19 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
     .data(canada.features)
     .enter()
     .append("path")
-    .attr("class", "district")
     .attr("d", path)
+    .attr("class", "district")
     .style("fill", d => {
       var district = sources.find(element => {
         return d.properties.NUMCF == element.id
       });
-  
       return color(district.results[0].party)
     })
-    .on("click", d => {
-      g.selectAll(this).classed("selected", false);
-      d3.select(this).classed("selected", true);
+    .on("click", function (d) {
+      d3.selectAll("path").classed("selected", false);
+      d3.select(this).classed("selected", true)
       showPanel(d.properties.NUMCF);
     });
-
 }
 
 /**
