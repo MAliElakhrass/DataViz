@@ -35,8 +35,8 @@ function initTileLayer(L, map) {
  * @see https://gist.github.com/d3noob/9211665
  */
 function initSvgLayer(map) {
-  var svg = d3.select(map.getPanes().overlayPane).append("svg"),
-        g = svg.append("g").attr("class", "leaflet-zoom-hide");
+  var svg = d3.select(map.getPanes().overlayPane).append("svg");
+  svg.append("g").attr("class", "leaflet-zoom-hide");
       
   return svg
 }
@@ -51,15 +51,25 @@ function initSvgLayer(map) {
  * @param color         The color scale mapping to each party. 
  * @param showPanel     The function called to display the panel. 
  */
-function createDistricts(g, path, canada, sources, color, showPanel) {
-  /* TODO: Create the traces for the districts. Make sur to follow these specs: 
-       - The color of the district should correspond to the party of the winning candidate
-       - The fill-opacity should be 80%;
-       - The color of the strokes should be "#333";
-       - When a district is clicked, it should get selected (class "selected") and the information panel 
-         associated with the riding should appear (use showPanel). Note it is only possible to select one
-         riding at a time. 
-   */
+function createDistricts(g, path, canada, sources, color, showPanel) {  
+  g.selectAll("path")
+    .data(canada.features)
+    .enter()
+    .append("path")
+    .attr("class", "district")
+    .attr("d", path)
+    .style("fill", d => {
+      var district = sources.find(element => {
+        return d.properties.NUMCF == element.id
+      });
+  
+      return color(district.results[0].party)
+    })
+    .on("click", d => {
+      g.selectAll(this).classed("selected", false);
+      d3.select(this).classed("selected", true);
+      showPanel(d.properties.NUMCF);
+    });
 
 }
 
@@ -76,5 +86,16 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
  * @see https://gist.github.com/d3noob/9211665
  */
 function updateMap(svg, g, path, canada) {
-  // TODO: Update the SVG element, the postion of the group "g" and the display of the traces based on the provided example 
+  var bounds = path.bounds(canada);
+	var topLeft = bounds[0], bottomRight = bounds[1];
+  
+  svg.attr("width", bottomRight[0] - topLeft[0])
+		 .attr("height", bottomRight[1] - topLeft[1])
+		 .style("left", topLeft[0] + "px")
+		 .style("top", topLeft[1] + "px");
+  
+  g.attr("transform", "translate(" + -topLeft[0] + ","+ -topLeft[1] + ")");
+
+  g.selectAll("path")
+   .attr("d", path)
 }
