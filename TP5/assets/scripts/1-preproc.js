@@ -59,7 +59,7 @@ function createSources(data) {
   var currentId = 0;
   var reorgonizedData = []
   data.forEach(element => {
-    if (index > 0){ // Sort last riding
+    if (index > 0){ // Sort last district
       reorgonizedData[index-1].results.sort((a, b) => d3.descending(a.votes, b.votes))
     }
 

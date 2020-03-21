@@ -13,11 +13,10 @@
  * @param y                 The Y scale
  */
 function updateDomains(districtSource, x, y) {
-  /* TODO: Update the domains according to the following specifications:
-       - The domain in X varies between the minimum and the maximum of votes obtained by the candidates of the district;
-       - The domain in Y correspongs to the name of the political parties associated to the winning candidates. Make sure the parties
-         are sorted in decreasing order of votes obtained (i.e. the winner's party should be first)
-   */
+  var results = districtSource.results;
+
+  x.domain([d3.min(results, d => d.votes), d3.max(results, d => d.votes)])
+  y.domain(results.map(d => d.party))  
 }
 
 /**
@@ -28,12 +27,11 @@ function updateDomains(districtSource, x, y) {
  * @param formatNumber      Function to correctly format numbers. 
  */
 function updatePanelInfo(panel, districtSource, formatNumber) {
-  /* TODO: Update the following textual information: 
-       - The name and number of the district;
-       - The name of the winning candidate and his or her party;
-       - The total number of votes for all candidates (use the function "formatNumber" to format the number).
-   */
+  var winner = districtSource.results[0];
 
+  panel.select("#district-name").text(districtSource.name + " [" + districtSource.id + "]");
+  panel.select("#elected-candidate").text(winner.candidate + " (" + winner.party + ")");
+  panel.select("#votes-count").text(formatNumber(d3.sum(districtSource.results, d => d.votes)) + " votes");
 }
 
 /**
@@ -52,16 +50,52 @@ function updatePanelInfo(panel, districtSource, formatNumber) {
  * @see https://bl.ocks.org/hrecht/f84012ee860cb4da66331f18d588eee3
  */
 function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, parties) {
-     /* TODO: Create or update the graphic according to the following specifications:
-       - The number of votes of the candidates must be shown in decreasing order
-       - The percentage of votes received by each candidate must be shown to the right of the bar
-       - The color of the bar must correspond to the candidate's party. If the party of the candidate is not
-         in the domain of the color scale, the bar should be colored in grey
-      - The name of the parties must be shown in shortened format. It is possible to obtain the shortened format of a party
-        with the list "parties" passed as a parameter. Note that if the party is not in the list "parties", you must 
-        write "Autre" as the shortened format. 
-   */
+  yAxis.tickFormat(function(d) {
+    var party = parties.find(function(element) {
+      return element.name == d;
+    });
 
+    if (party == undefined) {
+      return "Autre";
+    } else {
+      return party.abbreviation;
+    }
+  });
+
+  gAxis.attr("class", "y axis").call(yAxis)
+
+  gBars.selectAll(".bar").remove();
+  var bars = gBars.selectAll(".bar")
+                  .data(districtSource.results)
+                  .enter()
+                  .append("g")
+                  .attr("class", "bar");
+
+  bars.append("rect")
+      .attr("y", function(d) {
+        return y(d.party);
+      })
+      .attr("width", function(d) {
+        return x(d.votes);
+      })
+      .attr("height", function(d) {
+        return y.bandwidth();
+      })
+      .attr("fill", function(d) {
+        return color.domain().includes(d.party) ? color(d.party) : "gray";
+      });
+
+  bars.append("text")
+      .attr("x", function(d) {
+        return x(d.votes) + 5
+      })
+      .attr("y", function(d) {
+        return y(d.party) + y.bandwidth()/2
+      })
+      .style("text-anchor", "start")
+      .style("alignment-baseline","middle")
+      .text(d => d.percent)
+  
 }
 
 /**
@@ -70,6 +104,5 @@ function updatePanelBarChart(gBars, gAxis, districtSource, x, y, yAxis, color, p
  * @param g     The group in which the traces for the circumsciptions is created. 
  */
 function reset(g) {
-  // TODO: Reinitialize the map's display by removing the "selected" class from all elements
-
+  g.selectAll(".selected").classed("selected",false)
 }
