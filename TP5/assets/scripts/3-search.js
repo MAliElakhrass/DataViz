@@ -27,4 +27,10 @@ function search(map, g, districtId, bound, showPanel) {
       district using the function "showPanel"
    */
 
+   map.fitBounds(bound, {maxZoom: 8});
+
+   g.selectAll("path").classed("selected", false);
+   g.select("#district" + districtId).classed("selected", true);
+
+   showPanel(districtId);
 }

@@ -58,6 +58,7 @@ function createDistricts(g, path, canada, sources, color, showPanel) {
     .append("path")
     .attr("d", path)
     .attr("class", "district")
+    .attr("id", function(d){ return 'district' + d.properties.NUMCF;})
     .style("fill", d => {
       var district = sources.find(element => {
         return d.properties.NUMCF == element.id
